@@ -1,0 +1,288 @@
+
+
+.menu {
+  background-color: #fff;
+  border: 1px solid #dcdce6;
+}
+
+.menu .ContainerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 90%;
+  max-width: 980px;
+  
+  margin: auto;
+}
+
+.menu .Logo {
+  display: flex;
+  align-items: center;
+}
+
+
+
+.menu .Logo img {
+  width: 100%;
+  max-width: 15rem;
+  margin-left: 20px;
+  padding: 15px 0;
+}
+
+.menu nav ul {
+  display: flex;
+}
+
+.menu nav ul li {
+  list-style: none;
+}
+
+.menu nav ul li .Link {
+  text-decoration: none;
+  color: #1c558e;
+  text-transform: uppercase;
+  font-size: 1.0rem; 
+  padding: 2.4rem;
+  transition: all 250ms linear 0s;
+}
+
+.menu nav ul li .Link:hover {
+  background: #ffffff26;
+  color: #1c558e;
+}
+
+@media (max-width: 743px) {
+  nav {
+      display: none;
+  }
+
+  .one,
+  .two,
+  .three {
+      background-color: #1c558e;
+      height: 5px;
+      width: 100%;
+      margin: 6px auto;
+
+      transition-duration: 0.3s;
+  }
+
+  .menu-toggle {
+      width: 40px;
+      height: 30px;
+      margin-right: 20px;
+  }
+
+  /* fullscreen */
+  .menu-section.on {
+      position: absolute;
+      top:0;
+      left:0;
+      
+      width: 100vw;
+      height: 100vh;
+
+      background-color: #fff;
+      
+      z-index: 10;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .menu-section.on nav {
+      display: block;
+  }
+
+  .menu-section.on .menu-toggle {
+      position: absolute;
+      right: 25px;
+      top: 15px;
+  }
+
+  .menu-section.on .menu-toggle .one {
+      transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .menu-section.on .menu-toggle .two {
+      opacity: 0;
+  }
+
+  .menu-section.on .menu-toggle .three {
+      transform: rotate(-45deg) translate(8px, -9px);
+  }
+
+  .menu-section.on nav ul {
+      text-align: center;
+      display: block;
+  }
+
+  .menu-section.on nav ul li .Link{
+      transition-duration: 0.5s;
+      font-size: 2rem;
+      line-height: 3rem;
+      display: block;
+      
+  }
+
+}
+
+.sliderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+/* background-image: url("https://www.ofitexto.com.br/wp-content/uploads/2020/02/paisagem-natural-jalapao-970437844-1024x680.jpg");
+background-position: center;
+background-size: cover; */
+}
+.buttonSlider {
+width: 100%;
+padding: .5rem;
+border: 0;
+border-radius: 8px;
+
+
+}
+.containerItem {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 20px;
+  height: 475px;
+}
+.bgContainer {
+  width: 50%;
+
+}
+.bgContainer img {
+  width: 100%;
+  height: 90%;
+  
+}
+.contentContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.contentContainer h1 {
+  color: #1c558e;
+  font-weight: 900;
+  font-size: 80px;
+  line-height: 0.9em;
+}
+.contentContainer p {
+  line-height: 1.8em;
+  font-weight: 500;
+
+}
+.contentContainer button {
+  border: none;
+  outline: none;
+  color: #FFF;
+  background: #00B0FF;
+  padding: 16px 0px;
+  border-radius: 40px;
+  font-size: 16px;
+  width: 160px;
+  margin-top: 30px;
+  cursor: pointer;
+
+}
+@media (max-width: 745px) {
+  .containerItem{
+    padding-top: 5px;
+    height: 375px;
+  }
+  .bgContainer {
+    display: none;
+  }
+  .contentContainer {
+    width: 60%;
+  }
+  .contentContainer h1 {
+    font-size: 40px;
+   
+  }
+  .contentContainer p {
+    font-size: 15px;
+  
+  }
+
+ }
+ .comofunciona {
+   padding: 20px;
+   display: flex;
+   flex-direction: row;
+   align-content: center;
+   justify-content: center;
+ }
+ .comofunciona .content {
+   width: 50%;
+ }
+ .comofunciona .content h1 {
+  color: #1c558e;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 0.9em;
+}
+.comofunciona .content h3 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #2474c4;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 0.9em;
+}
+.comofunciona .content p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #41414d;
+  max-width: 85%;
+
+}
+ .comofunciona .Imagem {
+   width: 40%;
+   
+ }
+ .comofunciona .Imagem img {
+  width: 100%;
+  height: 100%;
+  max-width: 250px;
+  max-height: 250px;
+ }
+
+ @media (max-width: 745px) {
+  .comofunciona{
+    display: block;
+  }
+  .comofunciona .content {
+    width: 100%;
+   
+  }
+  .comofunciona .Imagem {
+    display: none;
+    
+  }
+ }
+
+
+
+ .footer {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  background-color: #23303d;
+ }
+ .footer div {
+   width: 30%;
+ }

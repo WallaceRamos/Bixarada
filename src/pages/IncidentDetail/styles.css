@@ -1,0 +1,111 @@
+.incidentDetail-container .card {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  position: relative;
+}
+
+.incidentDetail-container .card .images h2 {
+  margin-bottom: 25px;
+}
+
+.incidentDetail-container .card .infos h1 {
+  display: none;
+}
+
+.incidentDetail-container .card .infos .price {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.incidentDetail-container .card .infos .price h3 {
+  margin-left: 20px;
+}
+
+.incidentDetail-container .card .infos #more-infos {
+  display: flex;
+  justify-content: space-between;
+  color: gray;
+}
+
+.incidentDetail-container .card .infos #more-infos h5 {
+  padding: 8px;
+}
+
+.incidentDetail-container .card .infos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 400px;
+  margin-top: 30px;
+  width: 90%;
+}
+
+.incidentDetail-container .card .infos #more-infos .choose {
+  cursor: pointer;
+}
+
+.incidentDetail-container .card .infos #info-content {
+  font-size: 18px;
+  height: 70px;
+}
+
+.incidentDetail-container .card .images .slider {
+  height: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.incidentDetail-container .card .images .slider img {
+  width: 90%;
+  margin: auto;
+}
+
+@media ( min-width: 1025px) {
+  .incidentDetail-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+  }
+  .incidentDetail-container .card {
+    flex-direction: row;
+    height: 85%;
+    width: 80%;
+    border-radius: 15px;
+  }
+  .incidentDetail-container .card .images {
+    width: 50%;
+    height: 100%;
+  }
+  .incidentDetail-container .card .images h2 {
+    display: none;
+  }
+  .incidentDetail-container .card .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0px;
+    width: 50%;
+    font-size: 20px;
+    padding-right: 70px;
+  }
+  .incidentDetail-container .card .infos h1 {
+    display: block;
+  }
+}
+
+@media (min-width: 670px) {
+  .incidentDetail-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .incidentDetail-container .card {
+    width: 75%;
+    height: 100%;
+  }
+}
