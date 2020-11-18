@@ -14,7 +14,6 @@ export default function Logon() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [menssage, setMenssage] = useState('');
   const history = useHistory();
 
 toast.configure();
@@ -35,7 +34,7 @@ toast.configure();
       } else if (status == '02') {
       localStorage.setItem('UserImage', userImage_url)
 
-        history.push('incidents');
+        history.push('profileUser');
         }
      
 
@@ -53,7 +52,7 @@ toast.configure();
 
         <form onSubmit={handleLogin} >
           <h1>Faça seu logon</h1>
-          <p>{menssage}</p>
+      
           <input
             placeholder="Seu Email"
             type="email"

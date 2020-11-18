@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 import camera from '../../assets/camera.svg';
@@ -21,6 +22,7 @@ export default function NewIncident() {
   const ongId = localStorage.getItem('UserId');
 
   const history = useHistory();
+  toast.configure();
 
   const preview = useMemo(() => {
     return incidentImage ? URL.createObjectURL(incidentImage) : null;
@@ -48,10 +50,10 @@ export default function NewIncident() {
           Authorization: ongId,
         }
       })
-
-      history.push('/profileNog');
+      toast.success(`Caso cadastrado com sucesso`, {position: toast.POSITION.TOP_RIGHT});
+      history.push('/profileNgo');
     } catch (err) {
-      alert(err.response.data.error)
+      toast.error(`${err.response.data.error}`, {position: toast.POSITION.TOP_RIGHT});
     }
   }
     return (

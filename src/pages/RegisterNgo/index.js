@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { mask } from 'remask'
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
@@ -19,30 +20,34 @@ export default function Register() {
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState(1);
 
   const history = useHistory();
 
 
+  toast.configure();
 
   async function handleRegister(e) {
     e.preventDefault();
 
     try {
 
-
+      
       const response = await api.post('ongs', {
         name,
         email,
         whatsapp,
         cnpj,
         adress: city + uf,
+        status,
         password
       })
-
-      alert(`Cadastro realizado com sucesso,${response.data.name} Obrigado por nos apoiar na causa animal `);
+      toast.success(`Cadastro realizado com sucesso, ${response.data.name}`, {position: toast.POSITION.TOP_RIGHT})
+      //alert(`Cadastro realizado com sucesso,${response.data.name} Obrigado por nos apoiar na causa animal `);
       history.push('/logon');
     } catch (err) {
-      alert(err.response.data.error)
+      toast.error(`${err.response.data.error}`, {position: toast.POSITION.TOP_RIGHT})
+      // alert(err.response.data.error)
     }
   }
   return (

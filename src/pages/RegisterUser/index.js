@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { mask } from 'remask'
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 import camera from '../../assets/camera.svg';
@@ -18,9 +19,11 @@ export default function Register() {
   const [birthdate, setBirthdate] = useState('');
   const [city, setCity] = useState('');
   const [uf, setUf] = useState('');
+  const [status, setStatus] = useState(2);
   const [password, setPassword] = useState('');
 
   const history = useHistory();
+  toast.configure();
 
   const preview = useMemo(() => {
     return userImage ? URL.createObjectURL(userImage) : null;
@@ -30,6 +33,7 @@ export default function Register() {
   async function handleRegister(e) {
     e.preventDefault();
     try {
+      
     const data = new FormData();
 
 
@@ -39,13 +43,14 @@ export default function Register() {
     data.append('birthdate', birthdate)
     data.append('adress', city + uf)
     data.append('password', password)
+    data.append('status', status)
 
       const response = await api.post('apoiadores', data)
 
-      alert(`Cadastro realizado com sucesso,${response.data.name} Obrigado por nos apoiar na causa animal `);
+      toast.success(`Cadastro realizado com sucesso, ${response.data.name}`, {position: toast.POSITION.TOP_RIGHT})
       history.push('/logon');
     } catch (err) {
-      alert(err.response.data.error)
+      toast.error(`${err.response.data.error}`, {position: toast.POSITION.TOP_RIGHT})
     }
   }
   return (
