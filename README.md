@@ -1,4 +1,4 @@
-# 📱  Aplicação Bixarada
+# 💻  Aplicação Bixarada
 
 
 
