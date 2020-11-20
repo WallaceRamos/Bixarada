@@ -2,7 +2,7 @@
 
 
 
-![web-mobile](https://raw.githubusercontent.com/WallaceRamos/Bixarada/9006556a273063ad5373d2fc5877aef405aee91a/src/assets/logo.svg)
+![web-mobile](https://raw.githubusercontent.com/WallaceRamos/Bixarada/master/src/assets/logo50px.png)
 
 
 ## 🤔  O que é?
