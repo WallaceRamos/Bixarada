@@ -8,6 +8,7 @@ import RegisterNgo from './pages/RegisterNgo';
 import RegisterUser from './pages/RegisterUser';
 import ProfileNgo from './pages/ProfileNgo';
 import ProfileUser from './pages/ProfileUser';
+import UpdateUser from './pages/UpdateUser';
 import NewIncident from './pages/NewIncident';
 import Incidents from './pages/Incidents';
 import IncidentDetail from './pages/IncidentDetail';
@@ -26,6 +27,7 @@ export default function Routes() {
          
          <Route path="/profileNgo" component={ProfileNgo} />
          <Route path="/profileUser" component={ProfileUser} />
+         <Route path="/updateUser" component={UpdateUser} />
          
          <Route path="/newIncidents" component={NewIncident} />
        </Switch>
