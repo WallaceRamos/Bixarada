@@ -29,9 +29,9 @@ toast.configure();
        const { status, name, _id, userImage_url} = response.data;  
       localStorage.setItem('UserName', name)
       localStorage.setItem('UserId', _id)
-      if (status == '01') {
+      if (status === 1) {
         history.push('profileNgo');
-      } else if (status == '02') {
+      } else if (status === 2) {
       localStorage.setItem('UserImage', userImage_url)
 
         history.push('profileUser');
