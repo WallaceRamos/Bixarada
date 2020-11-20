@@ -117,3 +117,13 @@
 .register-container .content form label#thumbnail.has-thumbnail img {
 display: none;
 }
+@media (max-width: 880px) {
+  .register-container {
+    flex-direction: column;
+    height: auto
+  }
+  .register-container  .content{
+    flex-direction: column;
+    padding: 15px;
+  }
+}
