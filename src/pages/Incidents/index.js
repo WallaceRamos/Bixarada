@@ -4,6 +4,7 @@ import {  useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import Menu from '../../components/Menu';
+import Footer from '../../components/Footer';
 
 import './styles.css';
 
@@ -25,7 +26,7 @@ export default function IncidentDetail() {
   }, []);
 
   function handleDetail(id){
-    history.push('incidentDetail', { id });
+    history.push('incidentDetail', { Id: id  });
   }
 
   return (
@@ -55,6 +56,7 @@ export default function IncidentDetail() {
 
       </ul>
     </div>
+    <Footer />
     </>
   );
 }

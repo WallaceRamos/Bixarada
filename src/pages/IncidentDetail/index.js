@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {  useHistory } from 'react-router-dom';
+import {  useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
 import api from '../../services/api';
 import Menu from '../../components/Menu';
+import Footer from '../../components/Footer';
 
 
 import './styles.css';
@@ -16,11 +18,14 @@ export default function IncidentDetail() {
 
   const history = useHistory();
 
+  const location = useLocation();
+  toast.configure();
 
+  const IncidenteId = location.state.Id
 
 
   useEffect(() => {
-    api.get('casos/5fb2ba8cff39520844b55c5b', {
+    api.get(`casos/${IncidenteId}`, {
 
     }).then(response => {
       setIncidents(response.data);
@@ -28,6 +33,7 @@ export default function IncidentDetail() {
   }, []);
 
   function handleLogin(){
+    toast.error(`Faça o login ou se cadastre para Apoiar no caso`, {position: toast.POSITION.TOP_RIGHT});
     history.push('logon');
   }
 
@@ -41,7 +47,7 @@ export default function IncidentDetail() {
           <div class="images">
             <h2>{incidents.title}</h2>
             <div class="slider">
-              <img src={incidents.incidentImage_url} alt="" />
+              <img src={incidents.incidentImage_url} alt={incidents.title} />
             </div>
           </div>
           <div class="infos">
@@ -89,7 +95,7 @@ export default function IncidentDetail() {
 
           </ul> */}
       </div>
-
+<Footer />
     </>
   );
 }

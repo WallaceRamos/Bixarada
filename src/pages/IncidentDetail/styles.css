@@ -1,4 +1,6 @@
 .incidentDetail-container .card {
+  margin-top: 30px;
+  margin-Bottom: 30px;
   background-color: white;
   display: flex;
   align-items: center;
@@ -57,9 +59,11 @@
   height: 80%;
   display: flex;
   align-items: center;
+ 
 }
 
 .incidentDetail-container .card .images .slider img {
+  border-radius: 8%;
   width: 90%;
   margin: auto;
 }

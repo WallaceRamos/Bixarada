@@ -44,3 +44,16 @@
   border-radius: .8rem;
 
 }
+@media (max-width: 768px) {
+  .incident-container ul {
+    grid-template-columns: repeat(1, 1fr);
+
+  }
+  .incident-container ul li img {
+   align-items: center;
+    max-width: 50rem;
+    max-height: 30rem;
+    border-radius: .8rem;
+  
+  }
+ }
