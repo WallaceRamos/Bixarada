@@ -50,7 +50,7 @@ export default function Profile() {
   return (
     <div className="profile-container">
       <header className="Header">
-        <img src={LogoImg} alt="Be The Hero" />
+        <img src={LogoImg} alt="Bixarada" />
         
 
         <Link className="button" to="/newIncidents">Cadastrar novo caso</Link>
