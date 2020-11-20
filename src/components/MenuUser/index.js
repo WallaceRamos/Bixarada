@@ -24,7 +24,7 @@ export default function MenuUser() {
           <div className="profile">
             <div>
               <strong>{UserName}</strong>
-              <Link to="/profileUser">meu perfil</Link>
+              <Link to="/updateUser">meu perfil</Link>
             </div>
             <img src={UserImage} alt={UserName} />
           </div>
