@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { withNavigationFocus } from '@react-navigation/compat';
-
 import { View, TouchableOpacity, Image, Text, ScrollView, Dimensions } from 'react-native';
+import * as MailCompose from 'expo-mail-composer';
 
 import styles from './styles';
-
-
 import api from '../../services/api';
+
 import logo from '../../assets/logoTexto.png';
 
-function IncidentDetail({ isFocused }) {
+function IncidentNGODetail({ isFocused }) {
 
   const SCREEN_WIDTH = Dimensions.get('screen').width
 
@@ -37,15 +36,19 @@ function IncidentDetail({ isFocused }) {
     
   }, [isFocused]);
 
-
   function navigateBack() {
     navigation.goBack()
   }
 
-  async function handleDonate(given) {
- 
-    navigation.navigate('PayDonate', { given })
-    
+  function sendMail() {
+    MailCompose.composeAsync({
+      subject: `Solicitação de Retirada de dinheiro do caso ID: ${incident._id}`,
+      recipients: [`bixaradapets@gmail.com`],
+      body: `Olá gostaria de solicitar o deposito do total arrecadado de doação em um valor de R$ ${incident.total},00`
+    })
+  }
+  function navigateToUpdate(given) {
+    navigation.navigate('IncidentUpdate', { given });
   }
   return (
     <>
@@ -72,7 +75,7 @@ function IncidentDetail({ isFocused }) {
 
               <Text style={styles.TituloDetalhe}>{given.title}</Text>
 
-              <Text style={styles.SubTituloDetailhe}>Case description</Text>
+              <Text style={styles.SubTituloDetailhe}>Description</Text>
               <Text style={{ padding: 10, fontSize: 16 }}>{given.description}</Text>
 
               <Text style={styles.SubTituloDetailhe}>Raised</Text>
@@ -84,10 +87,17 @@ function IncidentDetail({ isFocused }) {
 
            
             <TouchableOpacity
-              onPress={() => handleDonate(given)}
+              onPress={sendMail}
               style={styles.swap}>
-              <Text style={styles.swapText}>Make Donation</Text>
+              <Text style={styles.swapText}>Request to Receive Donations</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigateToUpdate(given)}
+              style={styles.swap}>
+              <Text style={styles.swapText}>Update Case</Text>
+            </TouchableOpacity>
+
 
           </View>
 
@@ -96,4 +106,4 @@ function IncidentDetail({ isFocused }) {
     </>
   );
 }
-export default withNavigationFocus(IncidentDetail);
+export default withNavigationFocus(IncidentNGODetail);

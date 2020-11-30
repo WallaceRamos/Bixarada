@@ -1,86 +1,164 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiPower } from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Text, Image, View, ScrollView, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { withNavigationFocus } from '@react-navigation/compat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 
 import api from '../../services/api';
 
-import './styles.css';
+import styles from './styles';
 
-import LogoImg from '../../assets/Bixarada.png'
+import logo from '../../assets/logoTexto.png';
 
-export default function Profile() {
-  const [incidents, setIncidents] = useState([]);
+function PerfilUser({ isFocused }) {
 
-  const ongId = localStorage.getItem('UserId')
-  const ongName = localStorage.getItem('UserName')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [adress, setAdress] = useState('');
 
-  const history = useHistory();
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    api.get('perfil', {
-      headers: {
-        Authorization: ongId,
-      }
-    }).then(response => {
-      setIncidents(response.data);
-    })
-  }, [ongId]);
+  async function loadPerfil() {
 
+    const ID = await AsyncStorage.getItem('UserId');
 
-  // async function handleDeleteIncidente(id) {
-  //   try {
-  //     await api.delete(`incidents/${id}`, {
-  //       headers: {
-  //         Authorization: ongId,
-  //       }
-  //     });
+    const response = await api.get(`/ngo/${ID}`);// chamada da api
+    setName(response.data.name);
+    setEmail(response.data.email);
+    setWhatsapp(response.data.whatsapp);
+    setAdress(response.data.adress);
 
-  //     setIncidents(incidents.filter(incident => incident.id !== id));
-  //   } catch (err) {
-  //     alert('Erro ao deletar caso, tente novamente.');
-  //   }
-  // }
+    return;
 
-  function handleLogout() {
-    localStorage.clear();
-
-    history.push('/');
   }
 
+  useEffect(() => {
+
+    if (isFocused) {
+      loadPerfil();
+    }
+
+  }, [isFocused]);
+
+  async function handleUpdate() {
+    const DADOS = {
+      name,
+      email,
+      whatsapp,
+      adress,
+    }
+    try {
+      const ID = await AsyncStorage.getItem('UserId');
+      const response = await api.put(`ngos/${ID}`, DADOS);
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: 'Success',
+        text2: `Update successfully`,
+        visibilityTime: 4000,
+        autoHide: true,
+        topOffset: 100,
+        bottomOffset: 100,
+        onShow: () => { },
+        onHide: () => { }
+      });
+
+      loadPerfil();
+    } catch (err) {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: 'Error',
+        text2: `${err.response.data.error}`,
+        visibilityTime: 4000,
+        autoHide: true,
+        topOffset: 100,
+        bottomOffset: 100,
+        onShow: () => { },
+        onHide: () => { }
+      });
+    }
+
+  }
+
+  async function handleSignout() {
+    AsyncStorage.clear();
+    navigation.navigate('SignIn');
+
+  }
   return (
-    <div className="profile-container">
-      <header className="Header">
-        <img src={LogoImg} alt="Bixarada" />
-        
+    <>
 
-        <Link className="button" to="/newIncidents">Cadastrar novo caso</Link>
-        <button
-          onClick={handleLogout}
-          type="button"
-        >
-          <FiPower size={18} color="#1c558e" />
-        </button>
-      </header>
-      <span>Bem vinda, {ongName}</span>
-      <h1>Casos cadastrados</h1>
+      <View style={styles.container} >
 
-      <ul>
-        {incidents.map(incident => (
-          <li key={incident.id} >
-             <strong>{incident.start}</strong>
-            <img src={incident.incidentImage_url} alt={incident.title}/>
-            <strong className="title">{incident.title}</strong>
-                      
-            <p className="title"></p>
+        <View style={styles.header}>
 
-            <strong>VALOR:</strong>
-            <p>{Intl.NumberFormat('pt-Br', { style: 'currency', currency: 'BRL' }).format(incident.total)}</p>
+          <Image source={logo} style={styles.headerLogo} />
 
-            
-          </li>
-        ))}
+        </View>
 
-      </ul>
-    </div>
+        <ScrollView >
+
+          <View style={styles.form} >
+
+
+         
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your name"
+              placeholderTextColor="#999"
+              autoCapitalize="none"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your email"
+              placeholderTextColor="#999"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={email}
+              onChangeText={setEmail}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your Whatsapp"
+              placeholderTextColor="#999"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={whatsapp}
+              onChangeText={setWhatsapp}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your Address"
+              placeholderTextColor="#999"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={adress}
+              onChangeText={setAdress}
+            />
+            <View style={styles.ConteinerSignout}>
+              <TouchableOpacity onPress={handleUpdate} style={styles.update}>
+                <Text style={styles.updateText}>UPDATE</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={handleSignout} style={styles.signout}>
+                <Text style={styles.signoutText}>GET OUT</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+
+      </View>
+
+    </>
   );
 }
+
+export default withNavigationFocus(PerfilUser);

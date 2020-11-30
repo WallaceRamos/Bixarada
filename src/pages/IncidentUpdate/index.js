@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, TextInput, Text, Image, View, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { mask } from 'remask';
 
 import Toast from 'react-native-toast-message';
 
 import api from '../../services/api';
-import UserImagePicker from '../../components/UserImagepicker';
+import IncidentImagePicker from '../../components/IncidentImagepicker';
 import logo from '../../assets/logoTexto.png';
 
 
 import styles from './styles';
 
 
-export default function UpdateUser() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [adress, setAdress] = useState('');
-
-  
+export default function IncidentUpdate() {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const incident = route.params.given;
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [goal, setGoal] = useState('');
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
 
 
   async function handleSubmit() {
@@ -36,21 +39,21 @@ export default function UpdateUser() {
       return false
     }
     if (uri != null || uri != undefined) {
-    const ID = await AsyncStorage.getItem('UserId');
-
+    
     const formData = new FormData();
-    formData.append('userImage', {
+    formData.append('incidentImage', {
       type: 'image/jpeg',
       uri: uri,
       name: 'user.jpg',
     });
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('birthdate', birthdate);
-    formData.append('adress', adress);
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('goal', goal);
+    formData.append('start', mask(start, ['99/99/9999']));
+    formData.append('end', mask(end, ['99/99/9999']));
 
     try {
-      const response = await api.put(`user/${ID}`, formData, {
+      const response = await api.put(`incidents/${incident._id}`, formData, {
         headers: {
           headers: { 'Content-Type': 'multipart/form-data' }
         }
@@ -59,7 +62,7 @@ export default function UpdateUser() {
         type: 'success',
         position: 'top',
         text1: 'Success',
-        text2: `Update successfully`,
+        text2: `update performed successfully`,
         visibilityTime: 4000,
         autoHide: true,
         topOffset: 100,
@@ -68,7 +71,7 @@ export default function UpdateUser() {
         onHide: () => {}
       });
 
-      navigation.navigate('TabsUser');
+      navigation.navigate('TabsNOG');
     } catch (err) {
       Toast.show({
         type: 'error',
@@ -86,6 +89,7 @@ export default function UpdateUser() {
   }
 
 
+
   }
   return (
     <>
@@ -99,48 +103,63 @@ export default function UpdateUser() {
         <View style={styles.form} >
 
 
-{(<UserImagePicker />)}
+{(<IncidentImagePicker />)}
 <TextInput
   style={styles.input}
-  placeholder="Enter your name"
+  placeholder="Enter a Title"
   placeholderTextColor="#999"
   autoCapitalize="none"
-  value={name}
-  onChangeText={setName}
+  value={title}
+  onChangeText={setTitle}
 />
+
 <TextInput
   style={styles.input}
-  placeholder="Enter your email"
+  placeholder="Enter a Description"
   placeholderTextColor="#999"
-  keyboardType="email-address"
   autoCapitalize="none"
   autoCorrect={false}
-  value={email}
-  onChangeText={setEmail}
+  value={description}
+  onChangeText={setDescription}
 />
 <TextInput
   style={styles.input}
-  placeholder="Enter your date of birth"
+  placeholder="Enter a Goal"
   placeholderTextColor="#999"
   autoCapitalize="none"
   autoCorrect={false}
   maxLength={10}
   keyboardType="numeric"
-  value={mask(birthdate, ['99/99/9999'])}
-  onChangeText={setBirthdate}
+  value={goal}
+  onChangeText={setGoal}
 />
 <TextInput
   style={styles.input}
-  placeholder="Enter your address"
+  placeholder="Enter a Start date"
   placeholderTextColor="#999"
-  autoCapitalize="words"
-  autoCorrect={true}
-  value={adress}
-  onChangeText={setAdress}
+  autoCapitalize="none"
+  autoCorrect={false}
+  maxLength={10}
+  keyboardType="numeric"
+  value={mask(start, ['99/99/9999'])}
+  onChangeText={setStart}
 />
+<TextInput
+  style={styles.input}
+  placeholder="Enter a End Date"
+  placeholderTextColor="#999"
+  autoCapitalize="none"
+  autoCorrect={false}
+  maxLength={10}
+  keyboardType="numeric"
+  value={mask(end, ['99/99/9999'])}
+  onChangeText={setEnd}
+/>
+
+
 <View style={styles.ConteinerButton}>
   <TouchableOpacity onPress={handleSubmit} style={styles.buttonSignIn}>
-    <Text style={styles.buttonTextSignIn}>SIGN UP</Text>
+    <Text style={styles.buttonTextSignIn}>UPDATE THE INCIDENT</Text>
   </TouchableOpacity>
 
 </View>

@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, TextInput, Text, Image, View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { mask } from 'remask';
-
 import Toast from 'react-native-toast-message';
+import { mask } from 'remask';
 
 import api from '../../services/api';
 import UserImagePicker from '../../components/UserImagepicker';
-import logo from '../../assets/logoTexto.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import styles from './styles';
 
 
-export default function UpdateUser() {
+export default function SignUpUser() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [adress, setAdress] = useState('');
-
+  const [password, setPassword] = useState('');
+  const [status, setStatus] = useState(2);
   
+
   const navigation = useNavigation();
 
+
+  async function handleSubmitLogin() {
+    navigation.navigate('SignIn')
+  }
 
   async function handleSubmit() {
 
@@ -35,10 +39,9 @@ export default function UpdateUser() {
       });
       return false
     }
+ 
     if (uri != null || uri != undefined) {
-    const ID = await AsyncStorage.getItem('UserId');
-
-    const formData = new FormData();
+      const formData = new FormData();
     formData.append('userImage', {
       type: 'image/jpeg',
       uri: uri,
@@ -48,9 +51,10 @@ export default function UpdateUser() {
     formData.append('email', email);
     formData.append('birthdate', birthdate);
     formData.append('adress', adress);
-
+    formData.append('password', password);
+    formData.append('status', status);
     try {
-      const response = await api.put(`user/${ID}`, formData, {
+      const response = await api.post('users', formData, {
         headers: {
           headers: { 'Content-Type': 'multipart/form-data' }
         }
@@ -59,7 +63,7 @@ export default function UpdateUser() {
         type: 'success',
         position: 'top',
         text1: 'Success',
-        text2: `Update successfully`,
+        text2: `successful registration`,
         visibilityTime: 4000,
         autoHide: true,
         topOffset: 100,
@@ -68,7 +72,7 @@ export default function UpdateUser() {
         onHide: () => {}
       });
 
-      navigation.navigate('TabsUser');
+      navigation.navigate('SignIn');
     } catch (err) {
       Toast.show({
         type: 'error',
@@ -83,18 +87,10 @@ export default function UpdateUser() {
         onHide: () => {}
       });
     }
-  }
-
-
+    }
   }
   return (
     <>
-
-    <View style={styles.header}>
-
-      <Image source={logo} style={styles.headerLogo} />
-
-    </View>
   <ScrollView >
         <View style={styles.form} >
 
@@ -108,6 +104,7 @@ export default function UpdateUser() {
   value={name}
   onChangeText={setName}
 />
+
 <TextInput
   style={styles.input}
   placeholder="Enter your email"
@@ -120,33 +117,45 @@ export default function UpdateUser() {
 />
 <TextInput
   style={styles.input}
-  placeholder="Enter your date of birth"
+  placeholder="Enter date of birth"
   placeholderTextColor="#999"
-  autoCapitalize="none"
-  autoCorrect={false}
-  maxLength={10}
   keyboardType="numeric"
+  autoCapitalize="none"
+  maxLength={10}
+  autoCorrect={false}
   value={mask(birthdate, ['99/99/9999'])}
   onChangeText={setBirthdate}
 />
 <TextInput
   style={styles.input}
-  placeholder="Enter your address"
+  placeholder="Enter Address"
   placeholderTextColor="#999"
   autoCapitalize="words"
   autoCorrect={true}
   value={adress}
   onChangeText={setAdress}
 />
+<TextInput
+  style={styles.input}
+  placeholder="Enter your password"
+  placeholderTextColor="#999"
+  secureTextEntry
+  autoCapitalize="none"
+  autoCorrect={false}
+  value={password}
+  onChangeText={setPassword}
+/>
 <View style={styles.ConteinerButton}>
   <TouchableOpacity onPress={handleSubmit} style={styles.buttonSignIn}>
     <Text style={styles.buttonTextSignIn}>SIGN UP</Text>
   </TouchableOpacity>
-
+  <TouchableOpacity onPress={handleSubmitLogin} style={styles.buttonSignUp}>
+    <Text style={styles.TexSignUp}>Already have an account? <Text style={styles.TextSignUpBold}>Log in here</Text></Text>
+  </TouchableOpacity>
 </View>
 </View>
 </ScrollView>
-
+     
     </>
   );
 }
